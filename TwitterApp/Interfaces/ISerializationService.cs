@@ -1,6 +1,6 @@
 ﻿using TwitterApp.Models;
 
-namespace TwitterApp.Services;
+namespace TwitterApp.Interfaces;
 
 public interface ISerializationService
 {

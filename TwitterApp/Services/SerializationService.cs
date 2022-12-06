@@ -1,10 +1,16 @@
 ﻿using System.Text.Json;
+using TwitterApp.Interfaces;
 using TwitterApp.Models;
 
 namespace TwitterApp.Services;
 
 public class SerializationService : ISerializationService
 {
+    /// <summary>
+    /// Deserialize twitter json data to object
+    /// </summary>
+    /// <param name="json">twitter json data</param>
+    /// <returns>List of TweetModel</returns>
     public List<TweetModel> Deserialize(ref string json)
     {
         var jsonArray = json.Split("\r\n");
