@@ -1,15 +1,9 @@
 using System;
 using System.ComponentModel;
-using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using TwitterApp.Interfaces;
-using TwitterApp.Services;
 
 namespace TwitterApp;
 
@@ -17,16 +11,13 @@ public class GetTweetBackgroundWorker : BackgroundWorker
 {
     private readonly ILogger<GetTweetBackgroundWorker> _logger;
     private readonly ISerializationService _serializationService;
-    private readonly IConfiguration _configuration;
     private readonly ITwitterService _twitterService;
     private readonly ITwitterConsumerService _twitterConsumerService;
 
-    public GetTweetBackgroundWorker(ILogger<GetTweetBackgroundWorker> logger, IConfiguration configuration, 
-        ISerializationService serializationService, ITwitterService twitterService, 
-        ITwitterConsumerService twitterConsumerService)
+    public GetTweetBackgroundWorker(ILogger<GetTweetBackgroundWorker> logger, ISerializationService serializationService, 
+        ITwitterService twitterService, ITwitterConsumerService twitterConsumerService)
     {
         _logger = logger;
-        _configuration = configuration;
         _serializationService = serializationService;
         _twitterService = twitterService;
         _twitterConsumerService = twitterConsumerService;

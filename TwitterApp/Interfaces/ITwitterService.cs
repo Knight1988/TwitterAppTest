@@ -6,5 +6,5 @@ namespace TwitterApp.Interfaces;
 
 public interface ITwitterService
 {
-    Task SaveDataAsync(List<TweetModel> tweetModels);
+    Task SaveDataAsync(IEnumerable<TweetModel> tweetModels);
 }

@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using TwitterApp.Interfaces;
@@ -18,9 +20,15 @@ public class TwitterService : ITwitterService
         _twitterRepository = twitterRepository;
     }
 
-    public async Task SaveDataAsync(List<TweetModel> tweetModels)
+    public async Task SaveDataAsync(IEnumerable<TweetModel> tweetModels)
     {
-        await _twitterRepository.UpsertAsync(tweetModels);
-        _logger.LogInformation("Updated {Number} tweets", tweetModels.Count);
+        // update created date
+        tweetModels = tweetModels.Select(t =>
+        {
+            t.CreatedTime = DateTime.Now;
+            return t;
+        });
+        var updatedCount = await _twitterRepository.UpsertAsync(tweetModels);
+        _logger.LogInformation("Updated {Number} tweets", updatedCount);
     }
 }

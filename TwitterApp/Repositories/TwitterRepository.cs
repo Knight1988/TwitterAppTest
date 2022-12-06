@@ -15,9 +15,9 @@ public class TwitterRepository : ITwitterRepository
         _context = context;
     }
     
-    public async Task UpsertAsync(IEnumerable<TweetModel> tweetModels)
+    public async Task<int> UpsertAsync(IEnumerable<TweetModel> tweetModels)
     {
-        await _context.Tweets.UpsertRange(tweetModels)
+        return await _context.Tweets.UpsertRange(tweetModels)
             .On(p => p.Id)
             .RunAsync();
     }

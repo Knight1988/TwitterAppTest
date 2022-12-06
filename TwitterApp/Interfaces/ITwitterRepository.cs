@@ -6,5 +6,5 @@ namespace TwitterApp.Interfaces;
 
 public interface ITwitterRepository
 {
-    public Task UpsertAsync(IEnumerable<TweetModel> tweetModels);
+    public Task<int> UpsertAsync(IEnumerable<TweetModel> tweetModels);
 }
