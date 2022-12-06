@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -12,6 +7,7 @@ using Serilog;
 using TwitterApp.Interfaces;
 using TwitterApp.Repositories;
 using TwitterApp.Services;
+using TwitterApp.ViewModels;
 
 namespace TwitterApp
 {
@@ -21,6 +17,8 @@ namespace TwitterApp
     public partial class App : Application
     {
         private IHost host;
+
+        public static IServiceProvider ServiceProvider { get; private set; }
 
         public App()
         {
@@ -33,6 +31,8 @@ namespace TwitterApp
                 .ConfigureServices(ConfigureServices)
                 .UseSerilog()
                 .Build();
+
+            ServiceProvider = host.Services;
         }
 
         private void App_OnStartup(object sender, StartupEventArgs e)
@@ -53,18 +53,24 @@ namespace TwitterApp
             services.AddDbContext<TwitterContext>(ServiceLifetime.Singleton);
 
             // Services
+            services.AddSingleton<ITwitterAnalyticService, TwitterAnalyticService>();
             services.AddSingleton<ITwitterConsumerService, TwitterConsumerService>();
             services.AddSingleton<ISerializationService, SerializationService>();
             services.AddSingleton<ITwitterService, TwitterService>();
             
             // Repositories
             services.AddSingleton<ITwitterRepository, TwitterRepository>();
+            services.AddSingleton<ITwitterAnalyticRepository, TwitterAnalyticRepository>();
 
             // Windows
             services.AddSingleton<MainWindow>();
+
+            // View Models
+            services.AddSingleton<MainViewModel>();
             
             // Worker
             services.AddSingleton<GetTweetBackgroundWorker>();
+            services.AddSingleton<TweetAnalyticWorker>();
         }
     }
 }

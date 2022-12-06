@@ -4,6 +4,8 @@
              xmlns:local="clr-namespace:TwitterApp"
              Startup="App_OnStartup">
     <Application.Resources>
-         
+        <ResourceDictionary>
+            <local:ViewModelLocator x:Key="Locator" />
+        </ResourceDictionary>
     </Application.Resources>
 </Application>

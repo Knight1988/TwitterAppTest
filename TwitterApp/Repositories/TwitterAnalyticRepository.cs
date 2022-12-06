@@ -16,12 +16,12 @@ public class TwitterAnalyticRepository : ITwitterAnalyticRepository
         _context = context;
     }
     
-    public async Task<int> GetTotalTweetCount()
+    public async Task<int> GetTotalTweetCountAsync()
     {
         return await _context.Tweets.CountAsync();
     }
     
-    public async Task<List<TweetModel>> GetLatestTweets(int sampleCount)
+    public async Task<List<TweetModel>> GetLatestTweetsAsync(int sampleCount)
     {
         return await _context.Tweets.OrderByDescending(t => t.CreatedTime).Take(sampleCount).ToListAsync();
     }

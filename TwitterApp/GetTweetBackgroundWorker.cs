@@ -55,7 +55,7 @@ public class GetTweetBackgroundWorker : BackgroundWorker
                 await _twitterService.SaveDataAsync(tweetModels);
             }
 
-            await Task.Delay(1000);
+            // await Task.Delay(1000);
         }
     }
 }

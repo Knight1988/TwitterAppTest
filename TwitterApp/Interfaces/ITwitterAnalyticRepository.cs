@@ -6,6 +6,6 @@ namespace TwitterApp.Interfaces;
 
 public interface ITwitterAnalyticRepository
 {
-    Task<int> GetTotalTweetCount();
-    Task<List<TweetModel>> GetLatestTweets(int sampleCount);
+    Task<int> GetTotalTweetCountAsync();
+    Task<List<TweetModel>> GetLatestTweetsAsync(int sampleCount);
 }

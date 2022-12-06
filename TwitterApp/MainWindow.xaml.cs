@@ -20,14 +20,12 @@ namespace TwitterApp
     /// </summary>
     public partial class MainWindow : Window
     {
-        private readonly GetTweetBackgroundWorker _getTweetBackgroundWorker;
-
-        public MainWindow(GetTweetBackgroundWorker getTweetBackgroundWorker)
+        public MainWindow(GetTweetBackgroundWorker getTweetBackgroundWorker, TweetAnalyticWorker tweetAnalyticWorker)
         {
-            _getTweetBackgroundWorker = getTweetBackgroundWorker;
             InitializeComponent();
             
-            _getTweetBackgroundWorker.RunWorkerAsync();
+            getTweetBackgroundWorker.RunWorkerAsync();
+            tweetAnalyticWorker.RunWorkerAsync();
         }
     }
 }
