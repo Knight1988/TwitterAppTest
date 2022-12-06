@@ -1,0 +1,11 @@
+﻿{
+  "profiles": {
+    "TwitterApp": {
+      "commandName": "Project",
+      "dotnetRunMessages": true,
+      "environmentVariables": {
+        "DOTNET_ENVIRONMENT": "Development"
+      }
+    }
+  }
+}
