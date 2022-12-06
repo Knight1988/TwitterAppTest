@@ -41,8 +41,7 @@ public class GetTweetBackgroundWorker : BackgroundWorker
         }
         catch (Exception exception)
         {
-            Console.WriteLine(exception);
-            throw;
+            _logger.LogError(exception, "There was error when get sample stream");
         }
     }
 
