@@ -1,4 +1,7 @@
-﻿using TwitterApp.Interfaces;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
+using TwitterApp.Interfaces;
 using TwitterApp.Models;
 using TwitterApp.Repositories;
 
@@ -14,7 +17,7 @@ public class TwitterService : ITwitterService
         _logger = logger;
         _twitterRepository = twitterRepository;
     }
-    
+
     public async Task SaveDataAsync(List<TweetModel> tweetModels)
     {
         await _twitterRepository.UpsertAsync(tweetModels);

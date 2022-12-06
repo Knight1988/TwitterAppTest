@@ -7,3 +7,9 @@ riderModule.iml
 # File contain sensitive data
 appsettings.Development.json
 appsettings.Production.json
+
+# Log files
+/logs
+
+# Sqlite Files
+*.db
