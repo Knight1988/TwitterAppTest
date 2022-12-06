@@ -3,7 +3,7 @@ using TwitterApp.Models;
 
 namespace TwitterApp.Services;
 
-public class SerializationService
+public class SerializationService : ISerializationService
 {
     public List<TweetModel> Deserialize(ref string json)
     {
@@ -19,6 +19,7 @@ public class SerializationService
             }
             catch (Exception)
             {
+                // store unfinished 
                 if (i == jsonArray.Length - 1) newJson += jsonArray[i];
             }
         }
