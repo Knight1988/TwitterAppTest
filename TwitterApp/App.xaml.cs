@@ -5,6 +5,7 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Serilog;
@@ -36,6 +37,9 @@ namespace TwitterApp
 
         private void App_OnStartup(object sender, StartupEventArgs e)
         {
+            var context = host.Services.GetService<TwitterContext>();
+            context.Database.Migrate();
+            
             var mainWindow = host.Services.GetService<MainWindow>();
             mainWindow.Show();
 
@@ -49,6 +53,7 @@ namespace TwitterApp
             services.AddDbContext<TwitterContext>(ServiceLifetime.Singleton);
 
             // Services
+            services.AddSingleton<ITwitterConsumerService, TwitterConsumerService>();
             services.AddSingleton<ISerializationService, SerializationService>();
             services.AddSingleton<ITwitterService, TwitterService>();
             
@@ -57,6 +62,9 @@ namespace TwitterApp
 
             // Windows
             services.AddSingleton<MainWindow>();
+            
+            // Worker
+            services.AddSingleton<GetTweetBackgroundWorker>();
         }
     }
 }
