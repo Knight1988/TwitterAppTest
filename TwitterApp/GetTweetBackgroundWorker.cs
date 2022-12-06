@@ -2,6 +2,7 @@ using System;
 using System.ComponentModel;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using TwitterApp.Interfaces;
 
@@ -11,16 +12,14 @@ public class GetTweetBackgroundWorker : BackgroundWorker
 {
     private readonly ILogger<GetTweetBackgroundWorker> _logger;
     private readonly ISerializationService _serializationService;
-    private readonly ITwitterService _twitterService;
-    private readonly ITwitterConsumerService _twitterConsumerService;
+    private readonly IServiceScopeFactory _serviceScopeFactory;
 
     public GetTweetBackgroundWorker(ILogger<GetTweetBackgroundWorker> logger, ISerializationService serializationService, 
-        ITwitterService twitterService, ITwitterConsumerService twitterConsumerService)
+        IServiceScopeFactory serviceScopeFactory)
     {
         _logger = logger;
         _serializationService = serializationService;
-        _twitterService = twitterService;
-        _twitterConsumerService = twitterConsumerService;
+        _serviceScopeFactory = serviceScopeFactory;
         DoWork += OnDoWork;
     }
 
@@ -38,7 +37,11 @@ public class GetTweetBackgroundWorker : BackgroundWorker
 
     private async Task GetSampleStreamAsync(DoWorkEventArgs e)
     {
-        var stream = await _twitterConsumerService.GetSampleStreamAsync();
+        using var scope = _serviceScopeFactory.CreateScope();
+        var twitterConsumerService = scope.ServiceProvider.GetService<ITwitterConsumerService>();
+        var twitterService = scope.ServiceProvider.GetService<ITwitterService>();
+
+        var stream = await twitterConsumerService.GetSampleStreamAsync();
         var json = string.Empty;
         while (!e.Cancel)
         {
@@ -52,7 +55,7 @@ public class GetTweetBackgroundWorker : BackgroundWorker
                 // convert to model
                 var tweetModels = _serializationService.Deserialize(ref json);
                 // save to db
-                await _twitterService.SaveDataAsync(tweetModels);
+                await twitterService.SaveDataAsync(tweetModels);
             }
 
             // await Task.Delay(1000);

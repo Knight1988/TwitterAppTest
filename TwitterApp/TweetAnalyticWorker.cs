@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Threading.Tasks;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using TwitterApp.Interfaces;
 using TwitterApp.ViewModels;
@@ -10,15 +11,14 @@ namespace TwitterApp;
 public class TweetAnalyticWorker : BackgroundWorker
 {
     private readonly ILogger<TweetAnalyticWorker> _logger;
-    private readonly ITwitterAnalyticService _twitterAnalyticService;
     private readonly MainViewModel _mainViewModel;
+    private readonly IServiceScopeFactory _serviceScopeFactory;
 
-    public TweetAnalyticWorker(ILogger<TweetAnalyticWorker> logger, ITwitterAnalyticService twitterAnalyticService, 
-        MainViewModel mainViewModel)
+    public TweetAnalyticWorker(ILogger<TweetAnalyticWorker> logger, MainViewModel mainViewModel, IServiceScopeFactory serviceScopeFactory)
     {
         _logger = logger;
-        _twitterAnalyticService = twitterAnalyticService;
         _mainViewModel = mainViewModel;
+        _serviceScopeFactory = serviceScopeFactory;
         DoWork += OnDoWork;
     }
     
@@ -36,10 +36,13 @@ public class TweetAnalyticWorker : BackgroundWorker
 
     private async Task AnalyticTweetAsync(DoWorkEventArgs e)
     {
+        using var scope = _serviceScopeFactory.CreateScope();
+        var twitterAnalyticService = scope.ServiceProvider.GetService<ITwitterAnalyticService>();
+        
         while (!e.Cancel)
         {
-            _mainViewModel.TweetCount = await _twitterAnalyticService.GetTotalTweetCountAsync();
-            _mainViewModel.AverageTweetPerMinute = await _twitterAnalyticService.GetAverageTweetsPerMinuteAsync();
+            _mainViewModel.TweetCount = await twitterAnalyticService.GetTotalTweetCountAsync();
+            _mainViewModel.AverageTweetPerMinute = await twitterAnalyticService.GetAverageTweetsPerMinuteAsync();
             await Task.Delay(1000);
         }
     }

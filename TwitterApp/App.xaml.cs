@@ -37,9 +37,13 @@ namespace TwitterApp
 
         private void App_OnStartup(object sender, StartupEventArgs e)
         {
-            var context = host.Services.GetService<TwitterContext>();
-            context.Database.Migrate();
-            
+            var serviceScopeFactory = host.Services.GetService<IServiceScopeFactory>();
+            using (var scope = serviceScopeFactory.CreateScope())
+            {
+                var context = scope.ServiceProvider.GetService<TwitterContext>();
+                context.Database.Migrate();
+            }
+
             var mainWindow = host.Services.GetService<MainWindow>();
             mainWindow.Show();
 
@@ -50,17 +54,17 @@ namespace TwitterApp
         {
             // Sql services
             services.AddEntityFrameworkSqlite();
-            services.AddDbContext<TwitterContext>(ServiceLifetime.Singleton);
+            services.AddDbContext<TwitterContext>();
 
             // Services
-            services.AddSingleton<ITwitterAnalyticService, TwitterAnalyticService>();
-            services.AddSingleton<ITwitterConsumerService, TwitterConsumerService>();
+            services.AddScoped<ITwitterAnalyticService, TwitterAnalyticService>();
+            services.AddScoped<ITwitterConsumerService, TwitterConsumerService>();
             services.AddSingleton<ISerializationService, SerializationService>();
-            services.AddSingleton<ITwitterService, TwitterService>();
+            services.AddScoped<ITwitterService, TwitterService>();
             
             // Repositories
-            services.AddSingleton<ITwitterRepository, TwitterRepository>();
-            services.AddSingleton<ITwitterAnalyticRepository, TwitterAnalyticRepository>();
+            services.AddScoped<ITwitterRepository, TwitterRepository>();
+            services.AddScoped<ITwitterAnalyticRepository, TwitterAnalyticRepository>();
 
             // Windows
             services.AddSingleton<MainWindow>();
