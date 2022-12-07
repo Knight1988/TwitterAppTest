@@ -8,13 +8,13 @@ using TwitterApp.ViewModels;
 
 namespace TwitterApp;
 
-public class TweetAnalyticWorker : BackgroundWorker
+public class TweetAnalyticBackgroundWorker : BackgroundWorker
 {
-    private readonly ILogger<TweetAnalyticWorker> _logger;
+    private readonly ILogger<TweetAnalyticBackgroundWorker> _logger;
     private readonly MainViewModel _mainViewModel;
     private readonly IServiceScopeFactory _serviceScopeFactory;
 
-    public TweetAnalyticWorker(ILogger<TweetAnalyticWorker> logger, MainViewModel mainViewModel, IServiceScopeFactory serviceScopeFactory)
+    public TweetAnalyticBackgroundWorker(ILogger<TweetAnalyticBackgroundWorker> logger, MainViewModel mainViewModel, IServiceScopeFactory serviceScopeFactory)
     {
         _logger = logger;
         _mainViewModel = mainViewModel;
@@ -28,9 +28,10 @@ public class TweetAnalyticWorker : BackgroundWorker
         {
             await AnalyticTweetAsync(e);
         }
-        catch (Exception exception)
+        catch (Exception ex)
         {
-            _logger.LogError(exception, "There was error when analytic tweet");
+            _logger.LogError(ex, "There was error when analytic tweet");
+            OnError(ex.Message);
         }
     }
 
@@ -45,5 +46,12 @@ public class TweetAnalyticWorker : BackgroundWorker
             _mainViewModel.AverageTweetPerMinute = await twitterAnalyticService.GetAverageTweetsPerMinuteAsync();
             await Task.Delay(1000);
         }
+    }
+
+    public event EventHandler<string> Error;
+
+    protected virtual void OnError(string e)
+    {
+        Error?.Invoke(this, e);
     }
 }

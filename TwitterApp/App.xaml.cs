@@ -37,7 +37,7 @@ namespace TwitterApp
 
         private void App_OnStartup(object sender, StartupEventArgs e)
         {
-            var serviceScopeFactory = host.Services.GetService<IServiceScopeFactory>();
+            var serviceScopeFactory = ServiceProvider.GetService<IServiceScopeFactory>();
             using (var scope = serviceScopeFactory.CreateScope())
             {
                 var context = scope.ServiceProvider.GetService<TwitterContext>();
@@ -74,7 +74,7 @@ namespace TwitterApp
             
             // Worker
             services.AddSingleton<GetTweetBackgroundWorker>();
-            services.AddSingleton<TweetAnalyticWorker>();
+            services.AddSingleton<TweetAnalyticBackgroundWorker>();
         }
     }
 }

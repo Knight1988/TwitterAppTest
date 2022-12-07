@@ -38,8 +38,7 @@ public class TwitterConsumerService : ITwitterConsumerService
         var base64EncodedAuthenticationString = Convert.ToBase64String(System.Text.Encoding.ASCII.GetBytes(authenticationString));
         
         // Post body content
-        var values = new List<KeyValuePair<string, string>>();
-        values.Add(new KeyValuePair<string, string>("grant_type", "client_credentials"));
+        var values = new List<KeyValuePair<string, string>> { new("grant_type", "client_credentials") };
         var content = new FormUrlEncodedContent(values);
         
         // Add authentication header
