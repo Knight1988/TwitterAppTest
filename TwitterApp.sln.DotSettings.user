@@ -5,6 +5,6 @@
     &lt;TestId&gt;NUnit3x::95DC6F5A-FD9B-4F9D-9B23-D46E0C54B1F9::net6.0-windows::TwitterApp.Tests.TwitterAnalyticServiceTests&lt;/TestId&gt;&#xD;
   &lt;/TestAncestor&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=2715bc4e_002De6db_002D427f_002D86df_002D68645632d75f/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="ShouldDeserializeJson_Success #2" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=2715bc4e_002De6db_002D427f_002D86df_002D68645632d75f/@EntryIndexedValue">&lt;SessionState ContinuousTestingIsOn="True" ContinuousTestingMode="3" IsActive="True" Name="ShouldDeserializeJson_Success #2" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
   &lt;Project Location="E:\repos\MyProjects\TwitterApp\TwitterApp.Tests" Presentation="&amp;lt;TwitterApp.Tests&amp;gt;" /&gt;&#xD;
 &lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>
