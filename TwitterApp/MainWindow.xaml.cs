@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,6 +13,10 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
+using Microsoft.Extensions.DependencyInjection;
+using TwitterApp.Repositories;
 
 namespace TwitterApp
 {
@@ -20,12 +25,25 @@ namespace TwitterApp
     /// </summary>
     public partial class MainWindow : Window
     {
-        public MainWindow(GetTweetBackgroundWorker getTweetBackgroundWorker, TweetAnalyticBackgroundWorker tweetAnalyticBackgroundWorker)
+        private readonly IServiceScopeFactory _serviceScopeFactory;
+
+        public MainWindow(GetTweetBackgroundWorker getTweetBackgroundWorker, 
+            TweetAnalyticBackgroundWorker tweetAnalyticBackgroundWorker,
+            IServiceScopeFactory serviceScopeFactory)
         {
+            _serviceScopeFactory = serviceScopeFactory;
             InitializeComponent();
             
             getTweetBackgroundWorker.RunWorkerAsync();
             tweetAnalyticBackgroundWorker.RunWorkerAsync();
+        }
+
+        private async void MainWindow_OnClosing(object? sender, CancelEventArgs e)
+        {
+            using var scope = _serviceScopeFactory.CreateScope();
+            var context = scope.ServiceProvider.GetService<TwitterContext>();
+            // Clean up DB upon exit
+            await context.GetInfrastructure().GetService<IMigrator>().MigrateAsync("0");
         }
     }
 }
