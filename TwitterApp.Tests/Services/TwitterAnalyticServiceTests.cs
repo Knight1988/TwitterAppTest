@@ -32,7 +32,7 @@ public class TwitterAnalyticServiceTests
     public async Task GetAverageTweetsPerMinute_RecentFiveMin_ReturnAverageCount()
     {
         //Set the randomizer seed to generate repeatable data sets.
-        Randomizer.Seed = new Random(8675309);
+        Randomizer.Seed = new Random(2000);
         
         // generate fake tweets
         var testTweets = new Faker<TweetModel>()
@@ -49,7 +49,7 @@ public class TwitterAnalyticServiceTests
         var tweetCount = await service.GetAverageTweetsPerMinuteAsync();
         
         // Assert result
-        tweetCount.Should().Be(466);
+        tweetCount.Should().Be(205);
     }
 
     [Test]
