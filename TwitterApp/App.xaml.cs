@@ -74,7 +74,7 @@ namespace TwitterApp
             
             // Worker
             services.AddSingleton<GetTweetBackgroundWorker>();
-            services.AddSingleton<TweetAnalyticWorker>();
+            services.AddSingleton<TweetAnalyticBackgroundWorker>();
         }
     }
 }

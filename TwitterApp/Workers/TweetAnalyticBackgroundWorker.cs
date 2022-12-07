@@ -8,13 +8,13 @@ using TwitterApp.ViewModels;
 
 namespace TwitterApp;
 
-public class TweetAnalyticWorker : BackgroundWorker
+public class TweetAnalyticBackgroundWorker : BackgroundWorker
 {
-    private readonly ILogger<TweetAnalyticWorker> _logger;
+    private readonly ILogger<TweetAnalyticBackgroundWorker> _logger;
     private readonly MainViewModel _mainViewModel;
     private readonly IServiceScopeFactory _serviceScopeFactory;
 
-    public TweetAnalyticWorker(ILogger<TweetAnalyticWorker> logger, MainViewModel mainViewModel, IServiceScopeFactory serviceScopeFactory)
+    public TweetAnalyticBackgroundWorker(ILogger<TweetAnalyticBackgroundWorker> logger, MainViewModel mainViewModel, IServiceScopeFactory serviceScopeFactory)
     {
         _logger = logger;
         _mainViewModel = mainViewModel;
