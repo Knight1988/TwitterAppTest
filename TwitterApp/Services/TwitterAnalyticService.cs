@@ -22,9 +22,16 @@ public class TwitterAnalyticService : ITwitterAnalyticService
     public async Task<double> GetAverageTweetsPerMinuteAsync()
     {
         var tweets = await _twitterAnalyticRepository.GetLatestTweetsAsync(1000);
-        var oldestTweet = tweets.Last();
+        var oldestTweet = tweets.LastOrDefault();
+        // no tweet, return 0
+        if (oldestTweet == null) return 0;
+        
+        // get total minutes
         var totalMinutes = (DateTime.Now - oldestTweet.CreatedTime).TotalMinutes;
+        
+        // min calculation is 1 minutes
         if (totalMinutes < 1) totalMinutes = 1;
+        
         // calculate average tweets per minute
         return Convert.ToInt32(Math.Round(tweets.Count / totalMinutes));
     }
