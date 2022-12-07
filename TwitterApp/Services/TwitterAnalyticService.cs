@@ -24,6 +24,7 @@ public class TwitterAnalyticService : ITwitterAnalyticService
         var tweets = await _twitterAnalyticRepository.GetLatestTweetsAsync(1000);
         var oldestTweet = tweets.Last();
         var totalMinutes = (DateTime.Now - oldestTweet.CreatedTime).TotalMinutes;
+        if (totalMinutes < 1) totalMinutes = 1;
         // calculate average tweets per minute
         return Convert.ToInt32(Math.Round(tweets.Count / totalMinutes));
     }
