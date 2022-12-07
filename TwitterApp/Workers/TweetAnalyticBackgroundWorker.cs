@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Threading.Tasks;
+using LiveCharts.Defaults;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using TwitterApp.Interfaces;
@@ -44,6 +45,20 @@ public class TweetAnalyticBackgroundWorker : BackgroundWorker
         {
             _mainViewModel.TweetCount = await twitterAnalyticService.GetTotalTweetCountAsync();
             _mainViewModel.AverageTweetPerMinute = await twitterAnalyticService.GetAverageTweetsPerMinuteAsync();
+            
+            // update average tweet chart
+            _mainViewModel.AverageTweetObservableValues.Add(new ObservableValue(_mainViewModel.AverageTweetPerMinute));
+            if (_mainViewModel.AverageTweetObservableValues.Count > 10)
+            {
+                _mainViewModel.AverageTweetObservableValues.RemoveAt(0);
+            }
+            
+            // update total tweet chart
+            _mainViewModel.TweetReceivedObservableValues.Add(new ObservableValue(_mainViewModel.TweetCount));
+            if (_mainViewModel.TweetReceivedObservableValues.Count > 10)
+            {
+                _mainViewModel.TweetReceivedObservableValues.RemoveAt(0);
+            }
             await Task.Delay(1000);
         }
     }

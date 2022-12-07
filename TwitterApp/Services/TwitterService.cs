@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using TwitterApp.Interfaces;
 using TwitterApp.Models;
-using TwitterApp.Repositories;
 
 namespace TwitterApp.Services;
 

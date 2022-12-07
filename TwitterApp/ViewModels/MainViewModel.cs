@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using LiveCharts;
+using LiveCharts.Wpf;
 
 namespace TwitterApp.ViewModels;
 
@@ -20,6 +22,9 @@ public class MainViewModel : INotifyPropertyChanged
         get => _averageTweetPerMinute;
         set => SetField(ref _averageTweetPerMinute, value);
     }
+
+    public ChartValues<LiveCharts.Defaults.ObservableValue> AverageTweetObservableValues { get; set; } = new();
+    public ChartValues<LiveCharts.Defaults.ObservableValue> TweetReceivedObservableValues { get; set; } = new();
 
     public event PropertyChangedEventHandler? PropertyChanged;
 
