@@ -1,7 +1,7 @@
 using FluentAssertions;
 using TwitterApp.Services;
 
-namespace TwitterApp.Tests;
+namespace TwitterApp.Tests.Services;
 
 public class SerializationServiceTest
 {
