@@ -28,9 +28,10 @@ public class TweetAnalyticBackgroundWorker : BackgroundWorker
         {
             await AnalyticTweetAsync(e);
         }
-        catch (Exception exception)
+        catch (Exception ex)
         {
-            _logger.LogError(exception, "There was error when analytic tweet");
+            _logger.LogError(ex, "There was error when analytic tweet");
+            OnError(ex.Message);
         }
     }
 
@@ -45,5 +46,12 @@ public class TweetAnalyticBackgroundWorker : BackgroundWorker
             _mainViewModel.AverageTweetPerMinute = await twitterAnalyticService.GetAverageTweetsPerMinuteAsync();
             await Task.Delay(1000);
         }
+    }
+
+    public event EventHandler<string> Error;
+
+    protected virtual void OnError(string e)
+    {
+        Error?.Invoke(this, e);
     }
 }

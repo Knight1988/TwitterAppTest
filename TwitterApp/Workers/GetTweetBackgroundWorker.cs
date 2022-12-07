@@ -29,9 +29,10 @@ public class GetTweetBackgroundWorker : BackgroundWorker
         {
             await GetSampleStreamAsync(e);
         }
-        catch (Exception exception)
+        catch (Exception ex)
         {
-            _logger.LogError(exception, "There was error when get sample stream");
+            _logger.LogError(ex, "There was error when get sample stream");
+            OnError(ex.Message);
         }
     }
 
@@ -60,5 +61,12 @@ public class GetTweetBackgroundWorker : BackgroundWorker
 
             // await Task.Delay(1000);
         }
+    }
+
+    public event EventHandler<string> Error;
+
+    protected virtual void OnError(string e)
+    {
+        Error?.Invoke(this, e);
     }
 }

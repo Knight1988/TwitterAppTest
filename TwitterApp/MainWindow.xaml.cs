@@ -34,8 +34,21 @@ namespace TwitterApp
             _serviceScopeFactory = serviceScopeFactory;
             InitializeComponent();
             
+            getTweetBackgroundWorker.Error += GetTweetBackgroundWorkerOnError;
+            tweetAnalyticBackgroundWorker.Error += TweetAnalyticBackgroundWorkerOnError;
+            
             getTweetBackgroundWorker.RunWorkerAsync();
             tweetAnalyticBackgroundWorker.RunWorkerAsync();
+        }
+
+        private void TweetAnalyticBackgroundWorkerOnError(object? sender, string e)
+        {
+            MessageBox.Show(e, "Analytic Tweet Error", MessageBoxButton.OK, MessageBoxImage.Error);
+        }
+
+        private void GetTweetBackgroundWorkerOnError(object? sender, string e)
+        {
+            MessageBox.Show(e, "Get Tweet Error", MessageBoxButton.OK, MessageBoxImage.Error);
         }
 
         private async void MainWindow_OnClosing(object? sender, CancelEventArgs e)
