@@ -43,12 +43,14 @@ namespace TwitterApp
 
         private void TweetAnalyticBackgroundWorkerOnError(object? sender, string e)
         {
-            MessageBox.Show(e, "Analytic Tweet Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            MessageBox.Show("Some error occurred, please send log file to administrator", "Analytic Tweet Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            Close();
         }
 
         private void GetTweetBackgroundWorkerOnError(object? sender, string e)
         {
-            MessageBox.Show(e, "Get Tweet Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            MessageBox.Show("Some error occurred, please send log file to administrator", "Get Tweet Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            Close();
         }
 
         private async void MainWindow_OnClosing(object? sender, CancelEventArgs e)
