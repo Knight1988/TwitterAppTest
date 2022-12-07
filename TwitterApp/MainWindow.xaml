@@ -3,16 +3,46 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:wpf="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
         mc:Ignorable="d"
         DataContext="{Binding Source={StaticResource Locator}, Path=MainViewModel}"
         Closing="MainWindow_OnClosing"
         Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-            <TextBlock Text="Total number of tweets received:" />
-            <TextBlock Text="{Binding TweetCount, Mode=TwoWay}" />
-            <TextBlock Text="Average tweets per minute:" />
-            <TextBlock Text="{Binding AverageTweetPerMinute, Mode=TwoWay}" />
-        </StackPanel>
+    <Grid Margin="16">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*" />
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="2*" />
+            <ColumnDefinition Width="1*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50" />
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="1*" />
+        </Grid.RowDefinitions>
+        <TextBlock Grid.Row="0" Grid.Column="0" Text="Total number of tweets received:" />
+        <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding TweetCount, Mode=TwoWay}" />
+        <TextBlock Grid.Row="0" Grid.Column="2" Text="Average tweets per minute:" />
+        <TextBlock Grid.Row="0" Grid.Column="3" Text="{Binding AverageTweetPerMinute, Mode=TwoWay}" />
+        <wpf:CartesianChart Margin="4" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4" Background="#222E31">
+            <wpf:CartesianChart.Series>
+                <wpf:LineSeries Values="{Binding AverageTweetObservableValues}" 
+                                StrokeThickness="2" 
+                                Stroke="#1C8FC5" 
+                                Fill="Transparent" 
+                                LineSmoothness="1" 
+                                PointGeometrySize="10" />
+            </wpf:CartesianChart.Series>
+        </wpf:CartesianChart>
+        <wpf:CartesianChart Margin="4" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="4" Background="#222E31">
+            <wpf:CartesianChart.Series>
+                <wpf:LineSeries Values="{Binding TweetReceivedObservableValues}" 
+                                StrokeThickness="2" 
+                                Stroke="#1C8FC5" 
+                                Fill="Transparent" 
+                                LineSmoothness="1" 
+                                PointGeometrySize="10" />
+            </wpf:CartesianChart.Series>
+        </wpf:CartesianChart>
     </Grid>
 </Window>

@@ -23,7 +23,7 @@ public class SerializationService : ISerializationService
             try
             {
                 var data = JsonSerializer.Deserialize<DataModel>(jsonArray[i]);
-                tweets.Add(data.Data);
+                if (data != null) tweets.Add(data.Data);
             }
             catch (Exception)
             {

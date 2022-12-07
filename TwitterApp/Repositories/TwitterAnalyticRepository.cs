@@ -1,9 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using TwitterApp.Interfaces;
-using TwitterApp.Models;
 
 namespace TwitterApp.Repositories;
 
@@ -20,9 +18,9 @@ public class TwitterAnalyticRepository : ITwitterAnalyticRepository
     {
         return await _context.Tweets.CountAsync();
     }
-    
-    public async Task<List<TweetModel>> GetLatestTweetsAsync(int sampleCount)
+
+    public async Task<int> GetTweetCountFromMinuteAsync(DateTime fromDateTime)
     {
-        return await _context.Tweets.OrderByDescending(t => t.CreatedTime).Take(sampleCount).ToListAsync();
+        return await _context.Tweets.CountAsync(p => p.CreatedTime > fromDateTime);
     }
 }

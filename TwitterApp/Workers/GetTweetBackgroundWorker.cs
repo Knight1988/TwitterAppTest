@@ -56,7 +56,14 @@ public class GetTweetBackgroundWorker : BackgroundWorker
                 // convert to model
                 var tweetModels = _serializationService.Deserialize(ref json);
                 // save to db
-                await twitterService.SaveDataAsync(tweetModels);
+                if (tweetModels != null)
+                {
+                    await twitterService.SaveDataAsync(tweetModels);
+                }
+                else
+                {
+                    _logger.LogWarning("");
+                }
             }
 
             // await Task.Delay(1000);

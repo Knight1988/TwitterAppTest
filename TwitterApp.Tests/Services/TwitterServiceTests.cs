@@ -1,8 +1,6 @@
-﻿using System.Windows.Documents;
-using FluentAssertions;
+﻿using FluentAssertions;
 using Moq;
 using Moq.AutoMock;
-using NUnit.Framework;
 using TwitterApp.Interfaces;
 using TwitterApp.Models;
 using TwitterApp.Services;

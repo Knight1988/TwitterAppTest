@@ -1,9 +1,7 @@
-﻿using Bogus;
-using FluentAssertions;
+﻿using FluentAssertions;
 using Moq;
 using Moq.AutoMock;
 using TwitterApp.Interfaces;
-using TwitterApp.Models;
 using TwitterApp.Services;
 
 namespace TwitterApp.Tests.Services;
@@ -28,18 +26,11 @@ public class TwitterAnalyticServiceTests
     }
 
     [Test]
-    public async Task GetAverageTweetsPerMinute_RecentFiveMin_ReturnAverageCount()
+    public async Task GetAverageTweetsPerMinute_1000Per5Min_Return200()
     {
-        //Set the randomizer seed to generate repeatable data sets.
-        Randomizer.Seed = new Random(2000);
-        
-        // generate fake tweets
-        var testTweets = new Faker<TweetModel>()
-            .RuleFor(p => p.CreatedTime, f => f.Date.Between(DateTime.Now.AddMinutes(-5), DateTime.Now));
-        
         var mocker = new AutoMocker();
         var twitterFake = new Mock<ITwitterAnalyticRepository>();
-        twitterFake.Setup(x => x.GetLatestTweetsAsync(It.IsAny<int>())).ReturnsAsync(testTweets.Generate(1000));
+        twitterFake.Setup(x => x.GetTweetCountFromMinuteAsync(It.IsAny<DateTime>())).ReturnsAsync(1000);
         mocker.Use(twitterFake);
 
         var service = mocker.CreateInstance<TwitterAnalyticService>();
@@ -48,22 +39,15 @@ public class TwitterAnalyticServiceTests
         var tweetCount = await service.GetAverageTweetsPerMinuteAsync();
         
         // Assert result
-        tweetCount.Should().Be(205);
+        tweetCount.Should().Be(200);
     }
 
     [Test]
-    public async Task GetAverageTweetsPerMinute_RecentTenSecond_ReturnAverageCount()
+    public async Task GetAverageTweetsPerMinute_0Tweet_Return0()
     {
-        //Set the randomizer seed to generate repeatable data sets.
-        Randomizer.Seed = new Random(8675309);
-        
-        // generate fake tweets
-        var testTweets = new Faker<TweetModel>()
-            .RuleFor(p => p.CreatedTime, f => DateTime.Now.AddSeconds(-10));
-        
         var mocker = new AutoMocker();
         var twitterFake = new Mock<ITwitterAnalyticRepository>();
-        twitterFake.Setup(x => x.GetLatestTweetsAsync(It.IsAny<int>())).ReturnsAsync(testTweets.Generate(1000));
+        twitterFake.Setup(x => x.GetTweetCountFromMinuteAsync(It.IsAny<DateTime>())).ReturnsAsync(0);
         mocker.Use(twitterFake);
 
         var service = mocker.CreateInstance<TwitterAnalyticService>();
@@ -72,6 +56,6 @@ public class TwitterAnalyticServiceTests
         var tweetCount = await service.GetAverageTweetsPerMinuteAsync();
         
         // Assert result
-        tweetCount.Should().Be(1000);
+        tweetCount.Should().Be(0);
     }
 }
