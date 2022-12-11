@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.SignalR;
+using TwitterAppWeb.Interfaces;
 
 namespace TwitterAppWeb.Hubs;
 
@@ -8,9 +9,4 @@ public class TwitterHub : Hub<ITwitterHub>
     {
         await Clients.All.ReceiveAnalytic(tweetCount, averageTweetPerMinute);
     }
-}
-
-public interface ITwitterHub
-{
-    Task ReceiveAnalytic(int tweetCount, double averageTweetPerMinute);
 }
