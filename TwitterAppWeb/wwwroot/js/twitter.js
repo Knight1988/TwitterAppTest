@@ -44,6 +44,10 @@
         removeData(averageTweetPerMinuteChart);
         addData(averageTweetPerMinuteChart, date, averageTweetPerMinute);
     });
+    
+    connection.on("ReceiveError", function (message) {
+        document.getElementById("message").innerHTML = message;
+    })
 
     function addData(chart, label, data) {
         chart.data.labels.push(label);

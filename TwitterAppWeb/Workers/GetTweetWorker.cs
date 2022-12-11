@@ -1,5 +1,7 @@
 ﻿using System.Text;
+using Microsoft.AspNetCore.SignalR;
 using TwitterApp.Core.Interfaces;
+using TwitterAppWeb.Hubs;
 
 namespace TwitterAppWeb.Workers;
 
@@ -8,24 +10,32 @@ public class GetTweetWorker : BackgroundService
     private readonly ILogger<GetTweetWorker> _logger;
     private readonly ISerializationService _serializationService;
     private readonly IServiceScopeFactory _serviceScopeFactory;
+    private readonly IHubContext<TwitterHub,ITwitterHub> _twitterHub;
 
     public GetTweetWorker(ILogger<GetTweetWorker> logger, ISerializationService serializationService, 
-        IServiceScopeFactory serviceScopeFactory)
+        IServiceScopeFactory serviceScopeFactory, IHubContext<TwitterHub, ITwitterHub> twitterHub)
     {
         _logger = logger;
         _serializationService = serializationService;
         _serviceScopeFactory = serviceScopeFactory;
+        _twitterHub = twitterHub;
     }
     
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
-        try
+        while (!stoppingToken.IsCancellationRequested)
         {
-            await GetSampleStreamAsync(stoppingToken);
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "There was error when get sample stream");
+            try
+            {
+                await GetSampleStreamAsync(stoppingToken);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "There was error when get sample stream");
+                await _twitterHub.Clients.All.ReceiveError(ex.Message);
+            }
+
+            await Task.Delay(1000);
         }
     }
     
