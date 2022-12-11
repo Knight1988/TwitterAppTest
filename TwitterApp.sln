@@ -4,6 +4,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TwitterApp.Tests", "Twitter
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TwitterApp", "TwitterApp\TwitterApp.csproj", "{5BCF8DDC-ADCB-4119-859A-CAE5C48A4FEA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TwitterAppWeb", "TwitterAppWeb\TwitterAppWeb.csproj", "{569CB3D5-B02A-4D2E-A66A-A42BEF666FE5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,9 @@ Global
 		{5BCF8DDC-ADCB-4119-859A-CAE5C48A4FEA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5BCF8DDC-ADCB-4119-859A-CAE5C48A4FEA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5BCF8DDC-ADCB-4119-859A-CAE5C48A4FEA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{569CB3D5-B02A-4D2E-A66A-A42BEF666FE5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{569CB3D5-B02A-4D2E-A66A-A42BEF666FE5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{569CB3D5-B02A-4D2E-A66A-A42BEF666FE5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{569CB3D5-B02A-4D2E-A66A-A42BEF666FE5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

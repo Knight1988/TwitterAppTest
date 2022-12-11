@@ -7,7 +7,7 @@ using Microsoft.Extensions.Logging;
 using TwitterApp.Interfaces;
 using TwitterApp.ViewModels;
 
-namespace TwitterApp;
+namespace TwitterApp.Workers;
 
 public class TweetAnalyticBackgroundWorker : BackgroundWorker
 {

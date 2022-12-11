@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.Extensions.DependencyInjection;
 using TwitterApp.Repositories;
+using TwitterApp.Workers;
 
 namespace TwitterApp
 {

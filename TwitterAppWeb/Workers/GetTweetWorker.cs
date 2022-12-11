@@ -1,42 +1,35 @@
-using System;
-using System.ComponentModel;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using TwitterApp.Interfaces;
+﻿using System.Text;
+using TwitterAppWeb.Interfaces;
 
-namespace TwitterApp.Workers;
+namespace TwitterAppWeb.Workers;
 
-public class GetTweetBackgroundWorker : BackgroundWorker
+public class GetTweetWorker : BackgroundService
 {
-    private readonly ILogger<GetTweetBackgroundWorker> _logger;
+    private readonly ILogger<GetTweetWorker> _logger;
     private readonly ISerializationService _serializationService;
     private readonly IServiceScopeFactory _serviceScopeFactory;
 
-    public GetTweetBackgroundWorker(ILogger<GetTweetBackgroundWorker> logger, ISerializationService serializationService, 
+    public GetTweetWorker(ILogger<GetTweetWorker> logger, ISerializationService serializationService, 
         IServiceScopeFactory serviceScopeFactory)
     {
         _logger = logger;
         _serializationService = serializationService;
         _serviceScopeFactory = serviceScopeFactory;
-        DoWork += OnDoWork;
     }
-
-    private async void OnDoWork(object? sender, DoWorkEventArgs e)
+    
+    protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
         try
         {
-            await GetSampleStreamAsync(e);
+            await GetSampleStreamAsync(stoppingToken);
         }
         catch (Exception ex)
         {
             _logger.LogError(ex, "There was error when get sample stream");
-            OnError(ex.Message);
         }
     }
-
-    private async Task GetSampleStreamAsync(DoWorkEventArgs e)
+    
+    public async Task GetSampleStreamAsync(CancellationToken stoppingToken)
     {
         using var scope = _serviceScopeFactory.CreateScope();
         var twitterConsumerService = scope.ServiceProvider.GetService<ITwitterConsumerService>();
@@ -44,7 +37,7 @@ public class GetTweetBackgroundWorker : BackgroundWorker
 
         var stream = await twitterConsumerService.GetSampleStreamAsync();
         var json = string.Empty;
-        while (!e.Cancel)
+        while (!stoppingToken.IsCancellationRequested)
         {
             if (stream.CanRead)
             {
@@ -68,12 +61,5 @@ public class GetTweetBackgroundWorker : BackgroundWorker
 
             // await Task.Delay(1000);
         }
-    }
-
-    public event EventHandler<string> Error;
-
-    protected virtual void OnError(string e)
-    {
-        Error?.Invoke(this, e);
     }
 }

@@ -8,6 +8,7 @@ using TwitterApp.Interfaces;
 using TwitterApp.Repositories;
 using TwitterApp.Services;
 using TwitterApp.ViewModels;
+using TwitterApp.Workers;
 
 namespace TwitterApp
 {
