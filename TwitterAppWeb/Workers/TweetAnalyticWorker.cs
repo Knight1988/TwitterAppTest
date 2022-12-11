@@ -20,13 +20,19 @@ public class TweetAnalyticWorker : BackgroundService
     
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
-        try
+        while (!stoppingToken.IsCancellationRequested)
         {
-            await AnalyticTweetAsync(stoppingToken);
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "There was error when analytic tweet");
+            try
+            {
+                await AnalyticTweetAsync(stoppingToken);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "There was error when analytic tweet");
+                await _twitterHub.Clients.All.ReceiveError(ex.Message);
+            }
+            
+            await Task.Delay(1000);
         }
     }
     
