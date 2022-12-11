@@ -1,0 +1,19 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="row">
+    <div class="col-2">Number of tweet received:</div>
+    <div id="tweetCount" class="col-2">0</div>
+    <div class="col-2">Average tweet per minute:</div>
+    <div id="averageTweetPerMinute" class="col-5">0</div>
+</div>
+<div class="row">
+    <div class="col-6">
+        <canvas id="tweetCountCanvas"></canvas>
+    </div>
+    <div class="col-6">
+        <canvas id="averageTweetPerMinuteCanvas"></canvas>
+    </div>
+</div>
+<script src="~/js/twitter.js"></script>

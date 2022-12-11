@@ -1,5 +1,5 @@
 using FluentAssertions;
-using TwitterApp.Services;
+using TwitterApp.Core.Services;
 
 namespace TwitterApp.Tests.Services;
 
