@@ -1,5 +1,7 @@
+using System.Diagnostics;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
+using TwitterAppWeb;
 using TwitterAppWeb.Hubs;
 using TwitterAppWeb.Interfaces;
 using TwitterAppWeb.Repositories;
@@ -66,4 +68,8 @@ app.MapControllerRoute(
 
 app.MapHub<TwitterHub>("/twitterHub");
 
+if (app.Environment.IsProduction())
+{
+    Helper.OpenBrowser("http://localhost:5000");
+}
 app.Run();
