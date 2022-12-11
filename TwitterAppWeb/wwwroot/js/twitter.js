@@ -1,6 +1,9 @@
 ﻿$(() => {
     const tweetCountCanvas = document.getElementById('tweetCountCanvas');
-    const connection = new signalR.HubConnectionBuilder().withUrl("/twitterHub").build();
+    const averageTweetPerMinuteCanvas = document.getElementById('averageTweetPerMinuteCanvas');
+    const connection = new signalR.HubConnectionBuilder()
+        .withAutomaticReconnect()
+        .withUrl("/twitterHub").build();
 
     const tweetCountChart = new Chart(tweetCountCanvas, {
         type: 'line',
@@ -8,6 +11,18 @@
             labels: [],
             datasets: [{
                 label: 'Tweet Received',
+                data: [],
+                borderWidth: 1
+            }]
+        }
+    });
+
+    const averageTweetPerMinuteChart = new Chart(averageTweetPerMinuteCanvas, {
+        type: 'line',
+        data: {
+            labels: [],
+            datasets: [{
+                label: 'Average tweet per minute',
                 data: [],
                 borderWidth: 1
             }]
@@ -26,6 +41,8 @@
         const date = dayjs().format("HH:mm:ss");
         removeData(tweetCountChart);
         addData(tweetCountChart, date, tweetCount);
+        removeData(averageTweetPerMinuteChart);
+        addData(averageTweetPerMinuteChart, date, averageTweetPerMinute);
     });
 
     function addData(chart, label, data) {
