@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.SignalR;
-using TwitterAppWeb.Interfaces;
+using TwitterApp.Core.Interfaces;
 
 namespace TwitterAppWeb.Hubs;
 

@@ -1,10 +1,10 @@
 using Microsoft.EntityFrameworkCore;
 using Serilog;
+using TwitterApp.Core.Interfaces;
+using TwitterApp.Core.Repositories;
+using TwitterApp.Core.Services;
 using TwitterAppWeb;
 using TwitterAppWeb.Hubs;
-using TwitterAppWeb.Interfaces;
-using TwitterAppWeb.Repositories;
-using TwitterAppWeb.Services;
 using TwitterAppWeb.Workers;
 
 Log.Logger = new LoggerConfiguration()

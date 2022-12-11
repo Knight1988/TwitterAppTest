@@ -1,5 +1,5 @@
 ﻿using System.Text;
-using TwitterAppWeb.Interfaces;
+using TwitterApp.Core.Interfaces;
 
 namespace TwitterAppWeb.Workers;
 

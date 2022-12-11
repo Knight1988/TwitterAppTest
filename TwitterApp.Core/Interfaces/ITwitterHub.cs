@@ -1,4 +1,4 @@
-﻿namespace TwitterAppWeb.Interfaces;
+﻿namespace TwitterApp.Core.Interfaces;
 
 public interface ITwitterHub
 {

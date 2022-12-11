@@ -1,6 +1,6 @@
-﻿using TwitterAppWeb.Interfaces;
+﻿using TwitterApp.Core.Interfaces;
 
-namespace TwitterAppWeb.Services;
+namespace TwitterApp.Core.Services;
 
 public class TwitterAnalyticService : ITwitterAnalyticService
 {

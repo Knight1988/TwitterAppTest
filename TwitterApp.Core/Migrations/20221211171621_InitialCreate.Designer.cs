@@ -2,22 +2,24 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using TwitterAppWeb.Repositories;
+using TwitterApp.Core.Repositories;
 
 #nullable disable
 
-namespace TwitterApp.Migrations
+namespace TwitterApp.Core.Migrations
 {
     [DbContext(typeof(TwitterContext))]
-    partial class TwitterContextModelSnapshot : ModelSnapshot
+    [Migration("20221211171621_InitialCreate")]
+    partial class InitialCreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "6.0.11");
 
-            modelBuilder.Entity("TwitterApp.Models.TweetModel", b =>
+            modelBuilder.Entity("TwitterApp.Core.Models.TweetModel", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("TEXT");

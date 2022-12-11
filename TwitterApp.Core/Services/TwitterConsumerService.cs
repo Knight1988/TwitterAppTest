@@ -1,8 +1,10 @@
 ﻿using System.Net.Http.Headers;
-using TwitterAppWeb.Interfaces;
-using TwitterAppWeb.Models;
+using System.Net.Http.Json;
+using Microsoft.Extensions.Configuration;
+using TwitterApp.Core.Interfaces;
+using TwitterApp.Core.Models;
 
-namespace TwitterAppWeb.Services;
+namespace TwitterApp.Core.Services;
 
 public class TwitterConsumerService : ITwitterConsumerService
 {

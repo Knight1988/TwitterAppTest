@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using TwitterAppWeb.Models;
+using TwitterApp.Core.Models;
 
-namespace TwitterAppWeb.Repositories;
+namespace TwitterApp.Core.Repositories;
 
 public class TwitterContext : DbContext
 {
@@ -9,7 +9,7 @@ public class TwitterContext : DbContext
     
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseSqlite("Filename=MyDatabase.db");
+        optionsBuilder.UseSqlite("Filename=TwitterDatabase.db");
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

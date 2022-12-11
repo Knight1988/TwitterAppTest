@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
-using TwitterAppWeb.Models;
+using TwitterApp.Core.Models;
 
 namespace TwitterAppWeb.Controllers;
 

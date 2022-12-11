@@ -1,6 +1,6 @@
 ﻿using System.Text;
 using FluentAssertions;
-using TwitterAppWeb.Services;
+using TwitterApp.Core.Services;
 
 namespace TwitterApp.Tests.Services;
 

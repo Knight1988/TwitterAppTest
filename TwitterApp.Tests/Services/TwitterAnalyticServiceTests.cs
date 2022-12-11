@@ -1,8 +1,8 @@
 ﻿using FluentAssertions;
 using Moq;
 using Moq.AutoMock;
-using TwitterAppWeb.Interfaces;
-using TwitterAppWeb.Services;
+using TwitterApp.Core.Interfaces;
+using TwitterApp.Core.Services;
 
 namespace TwitterApp.Tests.Services;
 

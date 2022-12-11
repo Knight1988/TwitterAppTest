@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using TwitterAppWeb.Interfaces;
+using TwitterApp.Core.Interfaces;
 
-namespace TwitterAppWeb.Repositories;
+namespace TwitterApp.Core.Repositories;
 
 public class TwitterAnalyticRepository : ITwitterAnalyticRepository
 {

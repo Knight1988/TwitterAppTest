@@ -1,7 +1,8 @@
-﻿using TwitterAppWeb.Interfaces;
-using TwitterAppWeb.Models;
+﻿using Microsoft.Extensions.Logging;
+using TwitterApp.Core.Interfaces;
+using TwitterApp.Core.Models;
 
-namespace TwitterAppWeb.Services;
+namespace TwitterApp.Core.Services;
 
 public class TwitterService : ITwitterService
 {

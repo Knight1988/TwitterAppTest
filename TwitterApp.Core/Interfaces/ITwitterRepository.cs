@@ -1,6 +1,6 @@
-﻿using TwitterAppWeb.Models;
+﻿using TwitterApp.Core.Models;
 
-namespace TwitterAppWeb.Interfaces;
+namespace TwitterApp.Core.Interfaces;
 
 public interface ITwitterRepository
 {

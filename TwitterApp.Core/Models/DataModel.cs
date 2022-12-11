@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace TwitterAppWeb.Models;
+namespace TwitterApp.Core.Models;
 
 public class DataModel
 {

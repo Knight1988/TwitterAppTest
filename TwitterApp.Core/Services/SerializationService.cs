@@ -1,8 +1,8 @@
 ﻿using System.Text.Json;
-using TwitterAppWeb.Interfaces;
-using TwitterAppWeb.Models;
+using TwitterApp.Core.Interfaces;
+using TwitterApp.Core.Models;
 
-namespace TwitterAppWeb.Services;
+namespace TwitterApp.Core.Services;
 
 public class SerializationService : ISerializationService
 {

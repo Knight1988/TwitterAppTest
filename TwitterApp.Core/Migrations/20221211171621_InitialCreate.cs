@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace TwitterApp.Migrations
+namespace TwitterApp.Core.Migrations
 {
     public partial class InitialCreate : Migration
     {

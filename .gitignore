@@ -1,5 +1,6 @@
 bin/
 obj/
+.vs/
 /packages/
 riderModule.iml
 /_ReSharper.Caches/
@@ -9,7 +10,7 @@ appsettings.Development.json
 appsettings.Production.json
 
 # Log files
-/logs
+logs/
 
 # Sqlite Files
 *.db
