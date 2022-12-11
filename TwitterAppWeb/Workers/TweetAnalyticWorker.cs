@@ -1,21 +1,47 @@
-﻿namespace TwitterAppWeb.Workers;
+﻿using Microsoft.AspNetCore.SignalR;
+using TwitterAppWeb.Hubs;
+using TwitterAppWeb.Interfaces;
 
-public class TweetWorker : BackgroundService
+namespace TwitterAppWeb.Workers;
+
+public class TweetAnalyticWorker : BackgroundService
 {
-    private readonly ILogger<TweetAnalyticBackgroundWorker> _logger;
-    private readonly MainViewModel _mainViewModel;
+    private readonly ILogger<TweetAnalyticWorker> _logger;
     private readonly IServiceScopeFactory _serviceScopeFactory;
+    private readonly IHubContext<TwitterHub, ITwitterHub> _twitterHub;
 
-    public TweetAnalyticBackgroundWorker(ILogger<TweetAnalyticBackgroundWorker> logger, MainViewModel mainViewModel, IServiceScopeFactory serviceScopeFactory)
+    public TweetAnalyticWorker(ILogger<TweetAnalyticWorker> logger, IServiceScopeFactory serviceScopeFactory,
+        IHubContext<TwitterHub, ITwitterHub> twitterHub)
     {
         _logger = logger;
-        _mainViewModel = mainViewModel;
         _serviceScopeFactory = serviceScopeFactory;
-        DoWork += OnDoWork;
+        _twitterHub = twitterHub;
     }
     
-    protected override Task ExecuteAsync(CancellationToken stoppingToken)
+    protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
-        throw new NotImplementedException();
+        try
+        {
+            await AnalyticTweetAsync(stoppingToken);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "There was error when analytic tweet");
+        }
+    }
+    
+    public async Task AnalyticTweetAsync(CancellationToken stoppingToken)
+    {
+        using var scope = _serviceScopeFactory.CreateScope();
+        var twitterAnalyticService = scope.ServiceProvider.GetService<ITwitterAnalyticService>();
+        
+        while (!stoppingToken.IsCancellationRequested)
+        {
+            var tweetCount = await twitterAnalyticService.GetTotalTweetCountAsync();
+            var averageTweetPerMinute = await twitterAnalyticService.GetAverageTweetsPerMinuteAsync();
+
+            await _twitterHub.Clients.All.ReceiveAnalytic(tweetCount, averageTweetPerMinute);
+            await Task.Delay(1000);
+        }
     }
 }

@@ -2,8 +2,13 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="row">
+    <div id="tweetCount" class="col-5 offset-4">asd</div>
+    <div id="averageTweetPerMinute" class="col-5 offset-4">asd</div>
+</div>
+<div class="row">
+    <div class="col-5">
+        <canvas id="tweetCountCanvas"></canvas>
+    </div>
 </div>
 <script src="~/js/twitter.js"></script>

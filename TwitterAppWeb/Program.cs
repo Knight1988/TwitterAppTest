@@ -34,6 +34,7 @@ builder.Services.AddScoped<ITwitterRepository, TwitterRepository>();
 builder.Services.AddScoped<ITwitterAnalyticRepository, TwitterAnalyticRepository>();
 
 builder.Services.AddHostedService<GetTweetWorker>();
+builder.Services.AddHostedService<TweetAnalyticWorker>();
 
 var app = builder.Build();
 

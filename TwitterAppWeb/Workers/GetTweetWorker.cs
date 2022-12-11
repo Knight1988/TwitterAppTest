@@ -37,26 +37,19 @@ public class GetTweetWorker : BackgroundService
 
         var stream = await twitterConsumerService.GetSampleStreamAsync();
         var json = string.Empty;
+        
+        var buffer = new byte[1024];
         while (!stoppingToken.IsCancellationRequested)
         {
             if (stream.CanRead)
             {
                 // get json string
-                var buffer = new byte[1024];
                 var length = await stream.ReadAsync(buffer, 0, buffer.Length);
                 json += Encoding.UTF8.GetString(buffer, 0, length).Trim();
-                _logger.LogInformation("API Response: {Json}", json);
                 // convert to model
                 var tweetModels = _serializationService.Deserialize(ref json);
                 // save to db
-                if (tweetModels != null)
-                {
-                    await twitterService.SaveDataAsync(tweetModels);
-                }
-                else
-                {
-                    _logger.LogWarning("");
-                }
+                await twitterService.SaveDataAsync(tweetModels);
             }
 
             // await Task.Delay(1000);

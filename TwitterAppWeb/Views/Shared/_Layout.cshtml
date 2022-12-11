@@ -8,6 +8,10 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
     <link rel="stylesheet" href="~/TwitterAppWeb.styles.css" asp-append-version="true"/>
     <script src="~/js/signalr/dist/browser/signalr.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="~/lib/dayjs/dayjs.min.js"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
 <header>
@@ -42,8 +46,6 @@
         &copy; 2022 - TwitterAppWeb - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
     </div>
 </footer>
-<script src="~/lib/jquery/dist/jquery.min.js"></script>
-<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 <script src="~/js/site.js" asp-append-version="true"></script>
 @await RenderSectionAsync("Scripts", required: false)
 </body>
